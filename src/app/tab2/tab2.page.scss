@@ -1,0 +1,16 @@
+.container-item{
+    width: calc(100% / 2);
+    height: 100px;
+    display: inline-block;
+  }
+  .container-texto{
+    margin: 0px 15px 0px 15px;
+  }
+  .grid-column-candidatos{
+    width: calc(100% / 3);
+    display: inline-block;
+    margin-left: 33px;
+    text-align: center;
+    margin-top: 10px;
+  }
+  
