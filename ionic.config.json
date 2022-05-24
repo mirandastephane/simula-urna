@@ -1,0 +1,7 @@
+{
+  "name": "simula-urna",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}
