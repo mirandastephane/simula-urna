@@ -35,11 +35,9 @@ export class Tab2Page implements OnInit {
   candidate1: number = 0;
   candidate2: number = 0;
   candidate3: number = 0;
-  vBlank: number = 0;
   percentCandidate1: number = 0;
   percentCandidate2: number = 0;
   percentCandidate3: number = 0;
-  percentBlank: number = 0;
 
   constructor() {}
 
@@ -48,6 +46,7 @@ export class Tab2Page implements OnInit {
   clearField() {
     this.findCandidates = '';
   }
+
 
   alert() {
     alert("Voto computado com sucesso!");
@@ -68,7 +67,7 @@ export class Tab2Page implements OnInit {
 
 
   //Contabiliza o total de votos
-  this.count =  this.candidate1 + this.candidate2 + this.candidate3 + this.vBlank;
+  this.count =  this.candidate1 + this.candidate2 + this.candidate3;
 
   //Calcula o percentual de votos para cada candidato
   this.percentCandidate1 = (this.candidate1 / this.count) * 100; 
