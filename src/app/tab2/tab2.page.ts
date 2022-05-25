@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 
 export class Tab2Page implements OnInit {
 
-  searchCandidates: string;
+  findCandidates: string;
   candidates = [
     {
       "name": "Priscilla Sena",
@@ -31,43 +31,71 @@ export class Tab2Page implements OnInit {
 
   ];
 
-  nomeVariavel: string;
   count: number = 0;
   candidate1: number = 0;
   candidate2: number = 0;
   candidate3: number = 0;
+  vBlank: number = 0;
+  percentCandidate1: number = 0;
+  percentCandidate2: number = 0;
+  percentCandidate3: number = 0;
+  percentBlank: number = 0;
 
   constructor() {}
 
   ngOnInit() { }
 
   clearSearch() {
-    this.searchCandidates = '';
+    this.findCandidates = '';
   }
 
-  funcao() {
-    alert("FIM!")
+  blank(){
+    //alert("Voto computado com sucesso!")
+  }
 
-  if(this.searchCandidates == "12"){
+  alert() {
+    //alert("Voto computado com sucesso!")
+
+  if(this.findCandidates == "12"){
     this.candidate1++;
     console.log("Candidato 1: ", this.candidate1 )
   }
 
-  if(this.searchCandidates == "24"){
+  if(this.findCandidates == "24"){
     this.candidate2++;
     console.log("Candidato 2: ",this.candidate2)
   }
 
-  if(this.searchCandidates == "36"){
+  if(this.findCandidates == "36"){
     this.candidate3++;
     console.log("Candidato 3: ",this.candidate1)
   }
 
+  if(this.findCandidates == "0"){
+    this.vBlank++;
+    console.log("Voto Branco", this.vBlank )
+  }
+
   this.count =  this.candidate1 + this.candidate2 + this.candidate3 ;
 
+  this.percentCandidate1 = (this.candidate1 / this.count) * 100; 
+  this.percentCandidate2 = (this.candidate2 / this.count) * 100; 
+  this.percentCandidate3 = (this.candidate3 / this.count) * 100; 
+  this.percentBlank = (this.vBlank / this.count) * 100; 
+
+
   console.log("Total de Votos Apurados: ", this.count)
+  console.log("% de Votos Apurados: ", this.percentCandidate1)
+  console.log("% de Votos Apurados: ", this.percentCandidate2)
+  console.log("% de Votos Apurados: ", this.percentCandidate3)
+  console.log("% de Votos Apurados: ", this.percentBlank)
+
+
 
   this.clearSearch();
+
+  this.blank();
+
   }
 
 }
