@@ -9,6 +9,14 @@ import { AlertController } from '@ionic/angular';
 
 export class Tab2Page implements OnInit {
 
+  count: number = 0;
+  candidate1: number = 0;
+  candidate2: number = 0;
+  candidate3: number = 0;
+  percentCandidate1: number = 0;
+  percentCandidate2: number = 0;
+  percentCandidate3: number = 0;
+
   findCandidates: string;
   candidates = [
     {
@@ -31,14 +39,6 @@ export class Tab2Page implements OnInit {
     },
 
   ];
-
-  count: number = 0;
-  candidate1: number = 0;
-  candidate2: number = 0;
-  candidate3: number = 0;
-  percentCandidate1: number = 0;
-  percentCandidate2: number = 0;
-  percentCandidate3: number = 0;
 
   constructor(public alertController: AlertController) {}
 
