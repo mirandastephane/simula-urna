@@ -45,57 +45,35 @@ export class Tab2Page implements OnInit {
 
   ngOnInit() { }
 
-  clearSearch() {
+  clearField() {
     this.findCandidates = '';
   }
 
-  blank(){
-    //alert("Voto computado com sucesso!")
-  }
-
   alert() {
-    //alert("Voto computado com sucesso!")
+    alert("Voto computado com sucesso!");
 
   if(this.findCandidates == "12"){
     this.candidate1++;
-    console.log("Candidato 1: ", this.candidate1 )
   }
 
   if(this.findCandidates == "24"){
     this.candidate2++;
-    console.log("Candidato 2: ",this.candidate2)
   }
 
   if(this.findCandidates == "36"){
     this.candidate3++;
-    console.log("Candidato 3: ",this.candidate1)
   }
 
-  if(this.findCandidates == "0"){
-    this.vBlank++;
-    console.log("Voto Branco", this.vBlank )
-  }
+  this.clearField();
 
-  this.count =  this.candidate1 + this.candidate2 + this.candidate3 ;
 
+  //Contabiliza o total de votos
+  this.count =  this.candidate1 + this.candidate2 + this.candidate3 + this.vBlank;
+
+  //Calcula o percentual de votos para cada candidato
   this.percentCandidate1 = (this.candidate1 / this.count) * 100; 
   this.percentCandidate2 = (this.candidate2 / this.count) * 100; 
   this.percentCandidate3 = (this.candidate3 / this.count) * 100; 
-  this.percentBlank = (this.vBlank / this.count) * 100; 
-
-
-  console.log("Total de Votos Apurados: ", this.count)
-  console.log("% de Votos Apurados: ", this.percentCandidate1)
-  console.log("% de Votos Apurados: ", this.percentCandidate2)
-  console.log("% de Votos Apurados: ", this.percentCandidate3)
-  console.log("% de Votos Apurados: ", this.percentBlank)
-
-
-
-  this.clearSearch();
-
-  this.blank();
-
   }
 
 }

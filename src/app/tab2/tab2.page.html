@@ -32,11 +32,8 @@
       <ion-input placeholder="Informe o número do candidato(a)" type="number" [(ngModel)]="findCandidates" animated></ion-input>
     </ion-item>
     <ion-row >
-      <ion-col >
-          <ion-button color="light" (click) = "white()">Branco</ion-button>
-      </ion-col>
       <ion-col>
-          <ion-button color="danger" (click) = "clearSearch()">Corrigir</ion-button>
+          <ion-button color="danger" (click) = "clearField()">Corrigir</ion-button>
       </ion-col>
       <ion-col>
           <ion-button color="success" (click) = "alert()" >Confirmar</ion-button>
@@ -77,15 +74,6 @@
       <ion-label>
         <h2>Raphaela Santos</h2>
         <h3>{{candidate3}} votos, {{percentCandidate3}}%</h3>
-      </ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-avatar slot="start">
-        <img src="../assets/img/icon-user.png" />
-      </ion-avatar>
-      <ion-label>
-        <h2>Branco</h2>
-        <h3>{{vBlank}} votos, {{percentBlank}}%</h3>
       </ion-label>
     </ion-item>
   </ion-list>
