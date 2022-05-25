@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-tab2',
@@ -39,7 +40,7 @@ export class Tab2Page implements OnInit {
   percentCandidate2: number = 0;
   percentCandidate3: number = 0;
 
-  constructor() {}
+  constructor(public alertController: AlertController) {}
 
   ngOnInit() { }
 
@@ -47,9 +48,19 @@ export class Tab2Page implements OnInit {
     this.findCandidates = '';
   }
 
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'FIM!',
+      message: 'Seu voto foi computado com sucesso.',
+      buttons: ['OK']
+    });
 
-  alert() {
-    alert("Voto computado com sucesso!");
+    await alert.present();
+
+    const { role } = await alert.onDidDismiss();
+    console.log('onDidDismiss resolved with role', role);
+  
 
   if(this.findCandidates == "12"){
     this.candidate1++;
@@ -74,5 +85,5 @@ export class Tab2Page implements OnInit {
   this.percentCandidate2 = (this.candidate2 / this.count) * 100; 
   this.percentCandidate3 = (this.candidate3 / this.count) * 100; 
   }
-
 }
+
