@@ -8,13 +8,15 @@ import { DatabaseService } from '../database/database.service';
 
 export class CandidatoService {
 
+  private db: SQLiteObject;
+
   constructor(private dbProvider: DatabaseService) { }
 
-  public insert (candidato: Candidato){
+  public insertCandidato (candidato: Candidato){
     return this.dbProvider.getDB()
       .then ((db:SQLiteObject) => {
-        let sql = 'insert into candidato(nome_candidato, vice_candidato, numero, ativo, partido_id) values (?,?,?,?,?)';
-        let data = [candidato.nome_candidato, candidato.vice_candidato, candidato.numero, candidato.ativo ? 1:0 ,candidato.partido_id];
+        let sql = 'insert into candidato(nome_candidato, numero_candidato, ativo, partido_id) values (?,?,?,?)';
+        let data = [candidato.nome_candidato, candidato.numero_candidato, candidato.ativo ? 1:0 ,candidato.partido_id];
         
         return db.executeSql(sql,data)
           .catch ((e) => console.error(e));
@@ -22,11 +24,11 @@ export class CandidatoService {
       .catch((e) => console.error(e));
   }
 
-  public update(candidato: Candidato) {
+  public updateCandidato(candidato: Candidato) {
     return this.dbProvider.getDB()
     .then ((db:SQLiteObject) => {
-      let sql = 'update candidato set nome_candidato = ?, vice_candidato = ?, numero = ?, ativo = ?, partido_id = ?  where id = ?';
-      let data = [candidato.nome_candidato, candidato.vice_candidato, candidato.numero, candidato.ativo ? 1:0 ,candidato.partido_id, candidato.id];
+      let sql = 'update candidato set nome_candidato = ?, numero = ?, ativo = ?, partido_id = ?  where id = ?';
+      let data = [candidato.nome_candidato, candidato.numero_candidato, candidato.ativo ? 1:0 ,candidato.partido_id, candidato.id];
       
       return db.executeSql(sql,data)
         .catch ((e) => console.error(e));
@@ -34,7 +36,7 @@ export class CandidatoService {
   .catch((e) => console.error(e));
   }
 
-  public remove(id: number) {
+  public removeCandidato(id: number) {
     return this.dbProvider.getDB()
       .then((db: SQLiteObject) => {
         let sql = 'delete from candidato where id = ?';
@@ -46,7 +48,7 @@ export class CandidatoService {
       .catch((e) => console.error(e));
   }
 
-  public get(id: number) {
+  public getCandidatoId(id: number) {
     return this.dbProvider.getDB()
       .then((db: SQLiteObject) => {
         let sql = 'select * from candidato where id = ?';
@@ -58,9 +60,8 @@ export class CandidatoService {
               let item = data.rows.item(0);
               let candidato = new Candidato();
               candidato.id = item.id;
-              candidato.nome_candidato = item.candidato;
-              candidato.vice_candidato = item.vice_candidato;
-              candidato.numero = item.numero;
+              candidato.nome_candidato = item.nome_candidato; 
+              candidato.numero_candidato = item.numero_candidato;
               candidato.ativo = item.ativo;
               candidato.partido_id = item.partido_id;
 
@@ -74,16 +75,16 @@ export class CandidatoService {
       .catch((e) => console.error(e));
   }
 
-  public getAll(ativo: boolean, name: string = null) {
+  public getAllCandidatos(ativo: boolean, nome: string = null) {
     return this.dbProvider.getDB()
       .then((db: SQLiteObject) => {
-        let sql = 'SELECT p.*, c.name as partido_name FROM candidato p inner join partido c on p.partido_id = c.id where p.ativo = ?';
+        let sql = 'SELECT p.*, c.nome as partido_nome FROM candidato p inner join partido c on p.partido_id = c.id where p.ativo = ?';
         var data: any[] = [ativo ? 1 : 0];
 
         // filtrando pelo nome
-        if (name) {
+        if (nome) {
           sql += ' and p.name like ?'
-          data.push('%' + name + '%');
+          data.push('%' + nome + '%');
         }
 
         return db.executeSql(sql, data)
@@ -108,8 +109,7 @@ export class CandidatoService {
 export class Candidato {
   id: number;
   nome_candidato: string;
-  vice_candidato: number;
-  numero: number;
+  numero_candidato: number;
   ativo: boolean;
   partido_id: number;
 }

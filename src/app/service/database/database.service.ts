@@ -1,16 +1,22 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite/ngx';
+import { Platform } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root',
 })
 
-export class DatabaseService {
+export class DatabaseService implements OnInit {
 
-  constructor( private sqlite: SQLite) { }
+  constructor( private sqlite: SQLite, private platform: Platform) { }
+
+  ngOnInit() {
+    this.getDB();
+  }
 
   public getDB(){
     return this.sqlite.create({
+
       name: 'candidato.db',
       location: 'default'
     });
@@ -40,8 +46,9 @@ export class DatabaseService {
   private createTables (db:SQLiteObject){
    // Criando as tabelas
     db.sqlBatch([
-      ['CREATE TABLE IF NOT EXISTS partido(id integer primary key AUTOINCREMENT NOT NULL, nome TEXT)']
-      ['CREATE TABLE IF NOT EXISTS candidato(id integer primary key AUTOINCREMENT NOT NULL, nome_candidato TEXT, vice_candidato TEXT, numero INTEGER, ativo INTEGER,partido_id INTEGER, FOREIGN KEY (partido_id) REFERENCES partido(id))'],
+      ['CREATE TABLE IF NOT EXISTS partido(id INTEGER primary key AUTOINCREMENT NOT NULL, nome TEXT)']
+      ['CREATE TABLE IF NOT EXISTS votos (voto_id INTEGER primary key AUTOINCREMENT NOT NULL, numero_candidato INTEGER, FOREIGN KEY (numero_candidato) REFERENCES candidato(numero_candidato))']
+      ['CREATE TABLE IF NOT EXISTS candidato(id INTEGER primary key AUTOINCREMENT NOT NULL, nome_candidato TEXT, numero_candidato INTEGER, ativo INTEGER,partido_id INTEGER, FOREIGN KEY (partido_id) REFERENCES partido(id))'],
     ])
     .then(() => console.log('Tabelas criadas'))
     .catch(e => console.error('Erro ao criar as tabelas', e));
@@ -71,4 +78,5 @@ export class DatabaseService {
     })
     .catch(e => console.error('Erro ao consultar a qtd de partidos', e));
   }
+
 }

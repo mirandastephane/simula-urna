@@ -27,54 +27,69 @@
 
   <ion-card>
   <ion-grid>
-    <ion-item>
-      <ion-label position="stacked">Número</ion-label>
-      <ion-input placeholder="Informe o número do candidato(a)" type="number" [(ngModel)]="findCandidates" animated></ion-input>
+    <ion-item class="linha-card">
+      <ion-label position="stacked">Votação</ion-label>
+      <ion-input placeholder="Informe o número do candidato(a)" type="tel" [(ngModel)]="findCandidates"></ion-input>
     </ion-item>
     <ion-row>
-      <ion-col >
-          <ion-button color="danger" (click) = "clearField()">Corrigir</ion-button>
+      <ion-col>
+        <ion-button class ="botao" color="light" (click) = "white()">Branco</ion-button>
+    </ion-col>
+      <ion-col>
+          <ion-button class ="botao" color="danger" (click) = "clearField()">Corrigir</ion-button>
       </ion-col>
       <ion-col>
-          <ion-button color="success" (click) = "presentAlert()" >Confirmar</ion-button>
+          <ion-button class ="botao" color="success" (click) = "calculate()">Confirmar</ion-button>
       </ion-col>
     </ion-row>
   </ion-grid>
 </ion-card>
 
-  <ion-text style="text-align: center;">
-    <h3>Total de votos válidos apurados: {{count}}</h3>
-  </ion-text>
+  <ion-card>
+    <ion-text style="text-align: center;">
+      <h3 class="card-titulo">Total de votos válidos apurados: {{count}}</h3>
+    </ion-text>
 
-  <ion-list>
-    <ion-item>
-      <ion-avatar slot="start">
-        <img src="../assets/img/Priscila-Senna7.jpeg" />
-      </ion-avatar>
-      <ion-label>
-        <h2>Priscila Sena</h2>
-        <h3>{{candidate1}} votos, {{percentCandidate1}}%</h3>
-      </ion-label>
-    </ion-item>
+    <ion-list >
+      <ion-item class="linha-card">
+        <ion-avatar slot="start">
+          <img src="../assets/img/Priscila-Senna7.jpeg" />
+        </ion-avatar>
+        <ion-label>
+          <h2>Priscila Sena</h2>
+          <h3>{{candidate1}} votos, {{percentCandidate1}}%</h3>
+        </ion-label>
+      </ion-item>
 
-    <ion-item>
-      <ion-avatar slot="start">
-        <img src="../assets/img/raphaela-santos.jpg" />
-      </ion-avatar>
-      <ion-label>
-        <h2>Raphaela Santos</h2>
-        <h3>{{candidate2}} votos, {{percentCandidate2}}%</h3>
-      </ion-label>
-    </ion-item>
+      <ion-item class="linha-card">
+        <ion-avatar slot="start">
+          <img src="../assets/img/raphaela-santos.jpg" />
+        </ion-avatar>
+        <ion-label>
+          <h2>Raphaela Santos</h2>
+          <h3>{{candidate2}} votos, {{percentCandidate2}}%</h3>
+        </ion-label>
+      </ion-item>
 
-    <ion-item>
-      <ion-avatar slot="start">
-        <img src="../assets/img/tayara-andreza.jpg" />
-      </ion-avatar>
-      <ion-label>
-        <h2>Raphaela Santos</h2>
-        <h3>{{candidate3}} votos, {{percentCandidate3}}%</h3>
-      </ion-label>
-    </ion-item>
-  </ion-list>
+      <ion-item class="linha-card">
+        <ion-avatar slot="start">
+          <img src="../assets/img/tayara-andreza.jpg" />
+        </ion-avatar>
+        <ion-label>
+          <h2>Tayara Andreza</h2>
+          <h3>{{candidate3}} votos, {{percentCandidate3}}%</h3>
+        </ion-label>
+      </ion-item>
+
+      <ion-item class="linha-card">
+        <ion-avatar slot="start">
+          <img src="../assets/img/icon-user.png" />
+        </ion-avatar>
+        <ion-label>
+          <h2>Votos Brancos</h2>
+          <h3>{{candidateBlank}} votos, {{percentBlank}}%</h3>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-card>
 </ion-content>

@@ -1,3 +1,4 @@
+import { formatNumber } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 
@@ -13,9 +14,11 @@ export class Tab2Page implements OnInit {
   candidate1: number = 0;
   candidate2: number = 0;
   candidate3: number = 0;
+  candidateBlank: number = 0;
   percentCandidate1: number = 0;
   percentCandidate2: number = 0;
   percentCandidate3: number = 0;
+  percentBlank: number = 0;
 
   findCandidates: string;
   candidates = [
@@ -48,7 +51,7 @@ export class Tab2Page implements OnInit {
     this.findCandidates = '';
   }
 
-  async presentAlert() {
+  async alertConfirm() {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'FIM!',
@@ -56,11 +59,57 @@ export class Tab2Page implements OnInit {
       buttons: ['OK']
     });
 
-    await alert.present();
+    alert.present();
 
     const { role } = await alert.onDidDismiss();
     console.log('onDidDismiss resolved with role', role);
   
+  }
+
+  async alertWarning() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'ATENÇÃO',
+      message: 'Candidato Não Faz Parte desta Eleição.',
+      buttons: ['OK']
+    });
+
+    alert.present();
+
+    const { role } = await alert.onDidDismiss();
+    console.log('onDidDismiss resolved with role', role);
+  
+  }
+
+  async alertInvalid() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'ATENÇÃO',
+      message: 'Digite Número de Candidato Válido',
+      buttons: ['OK']
+    });
+
+    alert.present();
+
+    const { role } = await alert.onDidDismiss();
+    console.log('onDidDismiss resolved with role', role);
+  
+  }
+
+  white(){
+    this.findCandidates = '0';
+    this.calculate();
+  }
+
+  calculate(){
+
+  if (this.findCandidates == null && this.findCandidates == ""){
+    this.alertWarning();
+  } else if (this.findCandidates !=="12" && this.findCandidates !== "24" && this.findCandidates !== "36" && this.findCandidates !=="0"){
+    this.alertInvalid();
+  } else{
+    this.alertConfirm();
+  }
 
   if(this.findCandidates == "12"){
     this.candidate1++;
@@ -73,17 +122,22 @@ export class Tab2Page implements OnInit {
   if(this.findCandidates == "36"){
     this.candidate3++;
   }
+  
+  if (this.findCandidates == '0'){
+    this.candidateBlank++;
+  }
 
   this.clearField();
 
 
   //Contabiliza o total de votos
-  this.count =  this.candidate1 + this.candidate2 + this.candidate3;
+  this.count =  this.candidate1 + this.candidate2 + this.candidate3 + this.candidateBlank;
 
   //Calcula o percentual de votos para cada candidato
-  this.percentCandidate1 = (this.candidate1 / this.count) * 100; 
-  this.percentCandidate2 = (this.candidate2 / this.count) * 100; 
-  this.percentCandidate3 = (this.candidate3 / this.count) * 100; 
+  this.percentCandidate1 = parseFloat(((this.candidate1 / this.count) * 100).toFixed(2));
+  this.percentCandidate2 = parseFloat(((this.candidate2 / this.count) * 100).toFixed(2)); 
+  this.percentCandidate3 = parseFloat(((this.candidate3 / this.count) * 100).toFixed(2));
+  this.percentBlank = parseFloat(((this.candidateBlank/this.count) * 100).toFixed(2));
+ 
   }
 }
-
