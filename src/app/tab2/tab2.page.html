@@ -8,7 +8,7 @@
 
 <ion-content>
 
-  <ion-card *ngFor="let candidate of candidates | filter:findCandidates">
+  <ion-card *ngFor="let candidate of listCandidates | filter:arrayCandidates">
     <ion-card-content>
       <ion-list>
         <ion-item>
@@ -29,7 +29,7 @@
   <ion-grid>
     <ion-item class="linha-card">
       <ion-label position="stacked">Votação</ion-label>
-      <ion-input placeholder="Informe o número do candidato(a)" type="tel" [(ngModel)]="findCandidates"></ion-input>
+      <ion-input placeholder="Informe o número do candidato(a)" type="tel" [(ngModel)]="arrayCandidates"></ion-input>
     </ion-item>
     <ion-row>
       <ion-col>

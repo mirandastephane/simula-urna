@@ -20,8 +20,8 @@ export class Tab2Page implements OnInit {
   percentCandidate3: number = 0;
   percentBlank: number = 0;
 
-  findCandidates: string;
-  candidates = [
+  arrayCandidates: string;
+  listCandidates = [
     {
       "name": "Priscilla Sena",
       "number": "12",
@@ -39,8 +39,7 @@ export class Tab2Page implements OnInit {
       "number": "36",
       "part": "TAY",
       "image": "../assets/img/tayara-andreza.jpg"
-    },
-
+    }
   ];
 
   constructor(public alertController: AlertController) {}
@@ -48,7 +47,7 @@ export class Tab2Page implements OnInit {
   ngOnInit() { }
 
   clearField() {
-    this.findCandidates = '';
+    this.arrayCandidates = '';
   }
 
   async alertConfirm() {
@@ -97,33 +96,33 @@ export class Tab2Page implements OnInit {
   }
 
   white(){
-    this.findCandidates = '0';
+    this.arrayCandidates = '0';
     this.calculate();
   }
 
   calculate(){
 
-  if (this.findCandidates == null && this.findCandidates == ""){
+  if (this.arrayCandidates == null && this.arrayCandidates == ""){
     this.alertWarning();
-  } else if (this.findCandidates !=="12" && this.findCandidates !== "24" && this.findCandidates !== "36" && this.findCandidates !=="0"){
+  } else if (this.arrayCandidates !=="12" && this.arrayCandidates !== "24" && this.arrayCandidates !== "36" && this.arrayCandidates !=="0"){
     this.alertInvalid();
   } else{
     this.alertConfirm();
   }
 
-  if(this.findCandidates == "12"){
+  if(this.arrayCandidates == "12"){
     this.candidate1++;
   }
 
-  if(this.findCandidates == "24"){
+  if(this.arrayCandidates == "24"){
     this.candidate2++;
   }
 
-  if(this.findCandidates == "36"){
+  if(this.arrayCandidates == "36"){
     this.candidate3++;
   }
   
-  if (this.findCandidates == '0'){
+  if (this.arrayCandidates == '0'){
     this.candidateBlank++;
   }
 
