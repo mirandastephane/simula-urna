@@ -1,6 +1,8 @@
 import { formatNumber } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { AlertController } from '@ionic/angular';
+import { AlertController, NavController, ToastController } from '@ionic/angular';
+import { CandidatoService } from '../service/candidato/candidato.service';
+import { CrudService } from '../service/crud/crud.service';
 
 @Component({
   selector: 'app-tab2',
@@ -10,133 +12,46 @@ import { AlertController } from '@ionic/angular';
 
 export class Tab2Page implements OnInit {
 
-  count: number = 0;
-  candidate1: number = 0;
-  candidate2: number = 0;
-  candidate3: number = 0;
-  candidateBlank: number = 0;
-  percentCandidate1: number = 0;
-  percentCandidate2: number = 0;
-  percentCandidate3: number = 0;
-  percentBlank: number = 0;
+  nameC: string = '';
+  partyC: string = '';
+  voteInput: string = '';
+  voteList: Array<any>;
+  candidateList: Array<any>;
+  constructor(private crud: CrudService) { }
 
-  arrayCandidates: string;
-  listCandidates = [
-    {
-      "name": "Priscilla Sena",
-      "number": "12",
-      "part": "MUSA",
-      "image": "../assets/img/Priscila-Senna7.jpeg"
-    },
-    {
-      "name": "Rafaella Santos",
-      "number": "24",
-      "part": "FAVORITA",
-      "image": "../assets/img/raphaela-santos.jpg"
-    },
-    {
-      "name": "Tayara Andreza",
-      "number": "36",
-      "part": "TAY",
-      "image": "../assets/img/tayara-andreza.jpg"
-    }
-  ];
-
-  constructor(public alertController: AlertController) {}
-
-  ngOnInit() { }
-
-  clearField() {
-    this.arrayCandidates = '';
+  ngOnInit() {
+    this.crud.databaseConn();
   }
 
-  async alertConfirm() {
-    const alert = await this.alertController.create({
-      cssClass: 'my-custom-class',
-      header: 'FIM!',
-      message: 'Seu voto foi computado com sucesso.',
-      buttons: ['OK']
-    });
-
-    alert.present();
-
-    const { role } = await alert.onDidDismiss();
-    console.log('onDidDismiss resolved with role', role);
-  
-  }
-
-  async alertWarning() {
-    const alert = await this.alertController.create({
-      cssClass: 'my-custom-class',
-      header: 'ATENÇÃO',
-      message: 'Candidato Não Faz Parte desta Eleição.',
-      buttons: ['OK']
-    });
-
-    alert.present();
-
-    const { role } = await alert.onDidDismiss();
-    console.log('onDidDismiss resolved with role', role);
-  
-  }
-
-  async alertInvalid() {
-    const alert = await this.alertController.create({
-      cssClass: 'my-custom-class',
-      header: 'ATENÇÃO',
-      message: 'Digite Número de Candidato Válido',
-      buttons: ['OK']
-    });
-
-    alert.present();
-
-    const { role } = await alert.onDidDismiss();
-    console.log('onDidDismiss resolved with role', role);
-  
+  ionViewDidEnter() {  
+    this.voteList = this.crud.getAllVotes();
+    this.candidateList = this.crud.getAllCandidate();
   }
 
   white(){
-    this.arrayCandidates = '0';
-    this.calculate();
+    this.voteInput = '000';
+    this.crud.addVote(this.voteInput);
+    this.clear();
   }
 
-  calculate(){
-
-  if (this.arrayCandidates == null && this.arrayCandidates == ""){
-    this.alertWarning();
-  } else if (this.arrayCandidates !=="12" && this.arrayCandidates !== "24" && this.arrayCandidates !== "36" && this.arrayCandidates !=="0"){
-    this.alertInvalid();
-  } else{
-    this.alertConfirm();
+  clear() {
+    this.voteInput = '';
   }
 
-  if(this.arrayCandidates == "12"){
-    this.candidate1++;
+  confirm() {
+    this.crud.addVote(this.voteInput);
+    this.voteList = this.crud.getAllVotes();
+    this.clear();
   }
 
-  if(this.arrayCandidates == "24"){
-    this.candidate2++;
-  }
-
-  if(this.arrayCandidates == "36"){
-    this.candidate3++;
-  }
-  
-  if (this.arrayCandidates == '0'){
-    this.candidateBlank++;
-  }
-
-  this.clearField();
-
-
-  //Contabiliza o total de votos
-  this.count =  this.candidate1 + this.candidate2 + this.candidate3 + this.candidateBlank;
-
-  //Calcula o percentual de votos para cada candidato
-  this.percentCandidate1 = parseFloat(((this.candidate1 / this.count) * 100).toFixed(2));
-  this.percentCandidate2 = parseFloat(((this.candidate2 / this.count) * 100).toFixed(2)); 
-  this.percentCandidate3 = parseFloat(((this.candidate3 / this.count) * 100).toFixed(2));
-  this.percentBlank = parseFloat(((this.candidateBlank/this.count) * 100).toFixed(2));
- 
+  onChangeInput(){
+    this.nameC = '';
+    this.partyC = '';
+    if (String(this.voteInput).length > 0){
+      this.crud.getCandidateInfo(this.voteInput).then((res) => {
+        this.nameC = res['nameCand'];
+        this.partyC = res['partyCand'];
+      })
+    }
   }
 }

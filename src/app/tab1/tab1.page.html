@@ -20,4 +20,53 @@
       Neste calendário, você tem acesso, de forma dinâmica, às informações relativas às eleições, separadas por ano e mês. Para conhecer as normas que regulamentam o calendário das eleições 2020, <a href="https://www.tse.jus.br/eleicoes/eleicoes-2020/normas-e-documentacoes">acesse a página normas e documentações</a>. Caso queira pesquisar as normas dos outros anos, acesse <a href="https://www.tse.jus.br/eleicoes/eleicoes-anteriores/eleicoes-anteriores">eleições anteriores</a>. Em breve serão inseridas informações acerca do Calendário Eleitoral - Eleições 2022.
     </ion-card-content>
   </ion-card>
+
+  <ion-row class="ion-justify-content-center ion-margin">
+    <ion-button id="trigger-button">Candidatos</ion-button>
+  </ion-row>
+
+  <ion-modal trigger="trigger-button" [isOpen]="false">
+    <ng-template>
+      <ion-content>
+        <ion-header translucent="" role="banner"
+          class="md header-md header-translucent header-collapse-none header-translucent-md hydrated">
+          <ion-toolbar class="toolbar-title-default md in-toolbar hydrated">
+            <ion-title class="md title-default hydrated">Cadastros dos Candidatos</ion-title>
+          </ion-toolbar>
+        </ion-header>
+
+        <ion-item>
+          <ion-label>Nome</ion-label>
+          <ion-input type="text" placeholder="Nome" class="ion-margin" [(ngModel)]="nameCand"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>Número</ion-label>
+          <ion-input type="number" placeholder="Número" class="ion-margin" [(ngModel)]="numberCand"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>Partido</ion-label>
+          <ion-input type="text" placeholder="Partido" class="ion-margin" [(ngModel)]="partyCand"></ion-input>
+        </ion-item>
+
+        <ion-row class="ion-justify-content-center ion-margin">
+            <ion-button id="trigger-button" color="success" (click)="create()"  *ngIf="!candidateID as value">Cadastrar</ion-button>
+            <ion-button id="trigger-button" color="primary" (click)="update()"  *ngIf="candidateID as value">Atualizar</ion-button>
+        </ion-row>
+
+        <ion-item *ngFor="let candidate of candidateList">
+          <ion-label>
+            <h2><strong>{{ candidate.numberCand }}</strong></h2>
+            <p>{{ candidate.nameCand }}</p>
+            <p>{{ candidate.partyCand }}</p>
+          </ion-label>
+
+          <div class="item-note" item-end>
+            <ion-icon color="primary" name="create" style="zoom:1.3" (click)="read(candidate.candidate_id)"></ion-icon>
+
+            <ion-icon color="danger" name="trash" style="zoom:1.3" (click)="delete(candidate.candidate_id)"></ion-icon>
+          </div>
+        </ion-item>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
 </ion-content>
