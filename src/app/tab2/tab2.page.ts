@@ -1,7 +1,6 @@
 import { formatNumber } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { AlertController, NavController, ToastController } from '@ionic/angular';
-import { CandidatoService } from '../service/candidato/candidato.service';
 import { CrudService } from '../service/crud/crud.service';
 
 @Component({
