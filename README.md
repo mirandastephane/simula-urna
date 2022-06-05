@@ -1,4 +1,4 @@
-# simula-urna
+# Simula Urna
 
 To deploy this project run
 
